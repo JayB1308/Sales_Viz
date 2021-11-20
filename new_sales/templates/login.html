@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title%}
+{% endblock %}
+{% block content%}
+<div class="container">
+	<h1 class="center-align">Please Log In!</h1>
+	<form method="POST" action="">
+		{% csrf_token %}
+		{{form.username.label}}
+		{{form.username}}
+		{{form.password.label}}
+		{{form.password}}
+		<button class="waves-effect waves-light btn-large">Log In</button>
+	</form>
+	<h6>Don't Have An Account?</h6>
+	<p>Click Here To <a href="{% url 'register' %}">Register!</a></p>
+</div>
+{% endblock %}

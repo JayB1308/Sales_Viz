@@ -1,0 +1,152 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% block title %}
+Your Dashboard
+{% endblock %}
+{% block content %}
+<div style="display:none" id="jsonCustomer" data-json="{{customer_data}}"></div>
+<div style="display:none" id="jsonProduct" data-json="{{product_data}}"></div>
+<div class="container">
+	<h1 class="center">Your DashBoard!</h1>
+<div class="row">
+	<div class="col s12 m6">
+		<div class="card red darken-1">
+			<div class="card-content white-text">
+				<span class="card-title">Your Total Sales:</span>
+				<h3>${{total_sales}}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card amber">
+			<div class="card-content white-text">
+				<span class="card-title">Your Average Sales:</span>
+				<h3>${{avg_sales}}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card light-blue">
+			<div class="card-content white-text">
+				<span class="card-title">Your Best Customer:</span>
+				<h3>{{best_customer.Customer}}</h3>
+				<h6>${{best_customer.Sales}}</h6>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card green">
+			<div class="card-content white-text">
+				<span class="card-title">Your Best Product:</span>
+				<h3>{{best_product.Type}}</h3>
+				<h6>${{best_product.Quantity}}</h6>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="row">
+		<div class="s12 z-depth-1">
+	    <canvas id="prod_chart"></canvas>
+	    </div>
+	    <br>
+	    <br>
+	    <div class="s12 z-depth-1">
+	<canvas id="cust_chart"></canvas>
+	</div>
+
+</div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script>
+  function loadJson(selector) {
+  return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+}
+window.onload = function () {
+  var pro_jsonData = loadJson('#jsonProduct');
+
+  var pro_data = pro_jsonData.map((item) => item.Quantity);
+  var pro_labels = pro_jsonData.map((item) => item.Type);
+
+  var pro_config = {
+    type: 'bar',
+    data: {
+      labels: pro_labels,
+      datasets: [
+        {
+          label: 'Your Highest Selling Product',
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+          borderColor:[
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+          data: pro_data,
+        }
+      ]
+    },
+    options: {
+      beginAtZero:true,
+      responsive: true,
+      maintainAspectRation: false,
+    }
+  };
+  var pro_ctx = document.getElementById('prod_chart')
+  var cust_jsonData = loadJson('#jsonCustomer');
+
+  var cust_data = cust_jsonData.map((item) => item.Sales);
+  var cust_labels = cust_jsonData.map((item) => item.Customer);
+
+  var cust_config = {
+    type: 'bar',
+    data: {
+      labels: cust_labels,
+      datasets: [
+        {
+          label: 'Your Best Customer',
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+          borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+          data: cust_data,
+        }
+      ]
+    },
+    options: {
+    beginAtZero:true,
+      responsive: true,
+      maintainAspectRation: false,
+    }
+  };
+
+  var cust_ctx = document.getElementById('cust_chart')
+  window.myLine = new Chart(cust_ctx, cust_config);
+  window.myLine = new Chart(pro_ctx, pro_config);
+};
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title%}
+Your Customer Chart
+{% endblock %}
+{% block content%}
+<div style="display:none" id="jsonCustomer" data-json="{{customer_data}}"></div>
+<canvas id='cust_chart'></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script >
+	function loadJson(selector) {
+  return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+}
+	window.onload = function () {
+  var jsonData = loadJson('#jsonCustomer');
+
+  var data = jsonData.map((item) => item.Sales);
+  var labels = jsonData.map((item) => item.Customer);
+
+  var cust_config = {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Your Best Customer',
+          backgroundColor: 'black',
+          borderColor: 'lightblue',
+          data: data,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRation: false,
+    }
+  };
+
+  var cust_ctx = document.getElementById('cust_chart').getContext('2d');
+  window.myLine = new Chart(cust_ctx, cust_config);
+};
+</script>
+{% endblock %}

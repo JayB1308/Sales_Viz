@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+<div class="container">
+<h1>Please Register!</h1>
+
+<form method="POST" action ="">
+	{% csrf_token %}
+	{{form.username.label}}
+	{{form.username}}
+
+	{{form.email.label}}
+	{{form.email}}
+
+	{{form.password1.label}}
+	{{form.password1}}
+
+	{{form.password2.label}}
+	{{form.password2}}
+	<button class="waves-effect waves-light btn-large">Submit</button>
+</form>
+</div>
+{% endblock %}

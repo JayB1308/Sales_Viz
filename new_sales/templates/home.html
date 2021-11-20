@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Home
+{% endblock %}
+{% block content %}
+<nav class="white z-depth-2">
+	<div class="nav-wrapper grey darken-3">
+		<a href="{% url 'home' %}" class="brand-logo center white-text">Vizualize</a>
+		<ul id="nav-mobile" class="left hide-on-med-and-down">
+		<li><a class="white-text" href="{% url 'about' %}">About</a></li>
+        {% if request.user.is_authenticated  %}
+        <li><a href="{% url 'logout' %}" class="waves-effect waves-light btn red">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}" class="waves-effect waves-light btn teal darken-2">Login</a></li>
+        {% endif %}
+      </ul>
+	</div>
+</nav>
+<div class="container">
+	<div class="section">
+		<div class="container">
+			<h1 class="header left-align">Vizualize</h1>
+			<h3 class="left-align">See All Your Data Beautifully!</h3>
+			<br>
+			<a href="{% url 'get-started' %}" class="waves-effect waves-light amber
+			 btn-large">Get Started</a>
+		</div>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="section">
+			<div class="row">
+				<div class="col s6">
+					<h4>Compile All Your Data</h4>
+					<p>Just upload your monthly sales and see the graphs!</p>
+				</div>
+				<div class="col s6 ">
+					<h4>Overall Stats</h4>
+					<p>The reports include data from your previous uploads to give an overall complete look to your graphs!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+{% endblock %}

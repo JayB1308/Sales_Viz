@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Get Started
+{% endblock %}
+{% block content %}
+
+<div class="container">
+	<h1 class="center-align">Welcome!</h1>
+</div>
+<div class="container">
+	<div clas="row">
+		{% if request.user.is_authenticated %}
+		<div class="col s12 m12 l6">
+			<div class="card green darken-1">
+				<div class="card-content white-text">
+					<h1>Hello!</h1>
+					<h4>{{request.user.username}}</h4>
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="col s12 m12 l12 ">
+			<div class="card red darken-1">
+				<div class="card-content white-text">
+					<span class="card-title">Please Login!</span>
+					<h2><a class="white-text" href="{% url 'login' %}">Click Here..</a></h2>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		<div class="col s12 m12 l12 ">
+			<div class="card amber">
+				<div class="card-content white-text">
+					<span class="card-title"><a class="white-text" href="{% url 'file-upload' %}">Upload A File</a></span>
+					<h4>To view your dashboard upload your report.</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

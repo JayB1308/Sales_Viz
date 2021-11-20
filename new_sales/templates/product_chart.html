@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+Your Product Chart
+{% endblock %}
+{% block content%}
+<h2 class="center-align">Your Products</h2>
+<p>Here all your products</p>
+<div class="container">
+<div style="display:none" id="jsonProduct" data-json="{{product_data}}"></div>
+<canvas id='pro_chart'></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+	function loadJson(selector) {
+  return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+}
+window.onload = function () {
+  var jsonData = loadJson('#jsonProduct');
+
+  var data = jsonData.map((item) => item.Quantity);
+  var labels = jsonData.map((item) => item.Type);
+
+  var pro_config = {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Your Highest Selling Product',
+          backgroundColor: 'black',
+          borderColor: 'lightblue',
+          data: data,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRation: false,
+    }
+  };
+
+  var pro_ctx = document.getElementById('pro_chart').getContext('2d');
+  window.myLine = new Chart(pro_ctx, pro_config);
+};
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+Upload a File
+{% endblock %}
+{% block content %}
+<div class="container">
+<h1>Upload A File!</h1>
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{form.as_p}}
+	<button class="waves-effect waves-light btn-large">Submit</button>
+</form>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="section">
+		<div class="col s12 m12 l12">
+			<div class="card light-blue darken-4">
+				<div class="card-content white-text">
+					<span class="card-title">Make Sure</span>
+					<p>You upload only .xlsx files</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m12 12">
+			<div class="card blue-grey">
+				<div class="card-content white-text">
+					<span class="card-title">Your Report...</span>
+					<p>Must have Product_type,Customer_Name,Quantity and Price columns in it</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m12 l12">
+			<div class="card grey darken-3">
+				<div class="card-content white-text">
+					<span class="card-title">You will see..</span>
+					<p>Your total and average sales and much more</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+{% endblock %}
